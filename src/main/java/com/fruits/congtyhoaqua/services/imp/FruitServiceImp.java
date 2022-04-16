@@ -15,8 +15,10 @@ import com.fruits.congtyhoaqua.repositories.FruitRepository;
 import com.fruits.congtyhoaqua.repositories.ManufactureRepository;
 import com.fruits.congtyhoaqua.services.IFruitService;
 import com.fruits.congtyhoaqua.utils.Convert;
+import com.fruits.congtyhoaqua.utils.UploadFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.sql.Timestamp;
 import java.text.DateFormat;
@@ -38,6 +40,9 @@ public class FruitServiceImp implements IFruitService {
 
     @Autowired
     private FruitCategoryRepository fruitCategoryRepository;
+
+    @Autowired
+    private UploadFile uploadFile;
 
 
     @Override
@@ -66,6 +71,16 @@ public class FruitServiceImp implements IFruitService {
         }
         fruit1.setDateCreated(LocalDate.now());
         return fruitRepository.save(fruit1);
+    }
+
+    @Override
+    public Fruit editAvatarFruit(Integer idFruit, MultipartFile avatar) {
+        Optional<Fruit> fruit = fruitRepository.findById(idFruit);
+        if (fruit.isEmpty()){
+            throw new NotFoundException("No fruit");
+        }
+        fruit.get().setAvatar(uploadFile.getUrlFromFile(avatar));
+        return fruitRepository.save(fruit.get());
     }
 
     @Override

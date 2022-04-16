@@ -1,6 +1,7 @@
 package com.fruits.congtyhoaqua.models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fruits.congtyhoaqua.models.id.BillDetailId;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,6 +23,7 @@ public class BillDetail {
     @ManyToOne
     @MapsId("idBill")
     @JoinColumn(name = "id_bill")
+    @JsonIgnore
     private Bill bill;
 
     @ManyToOne

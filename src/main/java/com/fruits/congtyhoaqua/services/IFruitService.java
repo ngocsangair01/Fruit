@@ -2,6 +2,7 @@ package com.fruits.congtyhoaqua.services;
 
 import com.fruits.congtyhoaqua.dtos.FruitDTO;
 import com.fruits.congtyhoaqua.models.Fruit;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Set;
@@ -9,6 +10,7 @@ import java.util.Set;
 public interface IFruitService {
     Set<Fruit> getAllFruits();
     Fruit createFruit(Integer idManufacture, FruitDTO fruitDTO);
+    Fruit editAvatarFruit(Integer idFruit, MultipartFile avatar);
     Fruit editFruit(Integer idFruit,FruitDTO fruitDTO);
     Fruit deleteFruit(Integer idFruit);
     Fruit getById(Integer idFruit);

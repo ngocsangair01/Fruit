@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/manufacture")
+@CrossOrigin(origins = "*")
 public class ManufactureController extends BaseController<Manufacture> {
     @Autowired
     private IManufactureService manufactureService;

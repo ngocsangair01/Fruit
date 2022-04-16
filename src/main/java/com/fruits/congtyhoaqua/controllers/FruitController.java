@@ -14,6 +14,7 @@ import java.util.Set;
 
 @RestController
 @RequestMapping("/fruits")
+@CrossOrigin(origins = "*")
 public class FruitController extends BaseController<Fruit> {
     @Autowired
     private IFruitService fruitService;

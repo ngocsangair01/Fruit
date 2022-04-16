@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/customers")
+@CrossOrigin(origins = "*")
 public class CustomerController extends BaseController<Customer> {
     @Autowired
     private ICustomerService customerService;

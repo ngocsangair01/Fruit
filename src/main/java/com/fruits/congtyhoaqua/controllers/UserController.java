@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/users")
+@CrossOrigin(origins = "*")
 public class UserController  extends BaseController<User> {
     @Autowired
     private IUserService userService;

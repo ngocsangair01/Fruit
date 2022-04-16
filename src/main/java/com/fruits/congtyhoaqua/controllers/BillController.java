@@ -12,6 +12,7 @@ import java.util.Set;
 
 @RestController
 @RequestMapping("/bill-details")
+@CrossOrigin(origins = "*")
 public class BillController extends BaseController<Bill> {
     @Autowired
     private IBillService billService;
@@ -38,7 +39,7 @@ public class BillController extends BaseController<Bill> {
         return this.resSetSuccess(billService.filterByTime(start,end));
     }
 
-    @PostMapping
+    @GetMapping
     public ResponseEntity<?> getAllBill(){
         return this.resSetSuccess(billService.getAllBill());
     }
