@@ -8,6 +8,7 @@ import com.fruits.congtyhoaqua.services.IFruitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Set;
@@ -66,4 +67,9 @@ public class FruitController extends BaseController<Fruit> {
         return this.resSetSuccess(fruitService.getAllByDay(afterDate, beforeDate));
     }
 
+    @PatchMapping("/{idFruit}/avatar")
+    public ResponseEntity<?> editAvatarFruit(@PathVariable(name = "idFruit")Integer idFruit,
+                                             @RequestParam MultipartFile avatar){
+        return this.resSuccess(fruitService.editAvatarFruit(idFruit, avatar));
+    }
 }

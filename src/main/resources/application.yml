@@ -43,5 +43,3 @@ email:
 #cloudinary.url=cloudinary://{api_key}:{api_secret}@{cloud_name}
 cloudinary:
   url: cloudinary://975898585293148:JJqFPcPDDF08WM4hL-K4ysUbXzo@none01
-server:
-  port: 8081

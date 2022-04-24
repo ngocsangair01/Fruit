@@ -16,4 +16,5 @@ public interface IUserService {
     User editPassWord(Integer idUser, String password);
     User editAvatar(Integer idUser, MultipartFile avatar);
     Set<User> getAllUser();
+
 }
