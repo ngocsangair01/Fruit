@@ -19,14 +19,17 @@ import java.util.Set;
 @Entity
 @Table(name = "users")
 public class User extends BaseEntity {
+
     @Column(name = "account",unique = true)
     @NotBlank
+    @Nationalized
     private String account;
 
     @Column(name = "password")
     @NotBlank
-
+    @Nationalized
     private String password;
+
     @Column(name = "pre_name")
     @Nationalized
     @NotBlank
@@ -44,23 +47,33 @@ public class User extends BaseEntity {
     @Column(name = "address")
     @NotBlank
     @Length(max = 200000)
+    @Nationalized
     private String address;
 
     @Column(name = "birthday")
     @NotBlank
+    @Nationalized
     private String birthday;
 
     @Column(name = "avatar")
     @Length(max = 200000)
-
     private String avatar;
 
     @Column(name = "phoneNumber")
     @NotBlank
+    @Nationalized
     private String phoneNumber;
 
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
     @JsonIgnore
     private  Set<Bill> bills;
+
+//    @ManyToMany(fetch = FetchType.EAGER)
+//    @JoinTable(name = "user_role",
+//            joinColumns = @JoinColumn(name = "id_user",referencedColumnName = "id_user"),
+//            inverseJoinColumns = @JoinColumn(name = "id_role",referencedColumnName = "id_role"))
+////    @JsonIgnore
+    @ManyToMany(mappedBy = "users")
+    private Set<Role> roles;
 
 }

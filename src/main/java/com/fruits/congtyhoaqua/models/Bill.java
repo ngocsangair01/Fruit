@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Nationalized;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -19,6 +20,7 @@ import java.util.Set;
 public class Bill extends BaseEntity {
 
     @Column(name = "code",unique = true)
+    @Nationalized
     private String code;
 
     @Column(name = "dateCreated")

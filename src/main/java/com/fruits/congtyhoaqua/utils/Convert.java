@@ -106,4 +106,11 @@ public class Convert {
         }
         return manufacture;
     }
+
+    public static Role fromRoleDTOToRole(RoleDTO roleDTO,Role role){
+        if (roleDTO.getName() != null){
+            role.setName(roleDTO.getName());
+        }
+        return role;
+    }
 }

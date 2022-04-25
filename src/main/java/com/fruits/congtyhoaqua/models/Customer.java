@@ -31,9 +31,11 @@ public class Customer extends BaseEntity {
     private String address;
 
     @Column(name = "phone_number")
+    @Nationalized
     private String phoneNumber;
 
     @Column(name = "email")
+    @Nationalized
     private String email;
 
     @Column(name = "number_of_purchases")

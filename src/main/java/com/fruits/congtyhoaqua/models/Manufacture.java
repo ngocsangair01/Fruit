@@ -30,6 +30,7 @@ public class Manufacture extends BaseEntity {
     private String address;
 
     @Column(name = "phone_number")
+    @Nationalized
     private String phoneNumber;
 
     @OneToMany(mappedBy = "manufacture",cascade = CascadeType.ALL)

@@ -23,10 +23,12 @@ public class Fruit extends BaseEntity {
     private String name;
 
     @Column(name = "avatar")
+    @Nationalized
     private String avatar;
 
     @Column(name = "description")
     @Length(max = 200000)
+    @Nationalized
     private String description;
 
     @Column(name = "expiry")
@@ -46,6 +48,7 @@ public class Fruit extends BaseEntity {
 
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "id_manufacture")
+    @Nationalized
     private Manufacture manufacture;
 
     @OneToMany(mappedBy = "fruit",cascade = CascadeType.ALL)

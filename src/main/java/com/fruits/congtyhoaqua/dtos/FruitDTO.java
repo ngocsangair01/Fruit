@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Nationalized;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -24,14 +25,17 @@ public class FruitDTO {
 
 
     @Length(max = 200000)
+    @Nationalized
     private String description;
 
 
     @NotBlank(message = "expiry not null")
+    @Nationalized
     private String expiry;
 
 
     @NotBlank(message = "amount not null")
+    @Nationalized
     private Double amount;
 
 
