@@ -64,7 +64,7 @@ public class ManufactureServiceImp implements IManufactureService {
 
     @Override
     public Set<Manufacture> getManufactureByName(String name) {
-        Set<Manufacture> manufactures= new HashSet<>(manufactureRepository.findAllByName(name));
+        Set<Manufacture> manufactures= new HashSet<>(manufactureRepository.findAllByNameContaining(name));
         if(manufactures.isEmpty()){
             throw new NotFoundException("No Manufacture");
         }
