@@ -48,8 +48,8 @@ public class UserDTO {
     private String birthday;
 
 
-    @Length(max = 200000)
-    @Nationalized
+//    @Length(max = 200000)
+//    @Nationalized
     private MultipartFile avatar;
 
 

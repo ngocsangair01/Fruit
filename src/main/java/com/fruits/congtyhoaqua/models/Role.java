@@ -22,11 +22,12 @@ import java.util.Set;
 public class Role extends BaseEntity{
 
     @Column(name = "name")
-    @Nationalized
+//    @Nationalized
     private String name;
 
     @ManyToMany
     @JoinTable( name = "user_role")
+    @JsonIgnore
     private Set<User> users;
 
 }

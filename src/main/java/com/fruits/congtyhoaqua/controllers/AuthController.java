@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.io.InvalidObjectException;
 
 @RestController
@@ -28,7 +29,7 @@ public class AuthController extends BaseController<AuthenticationResponse> {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<?> signup(@RequestBody UserDTO userDTO){
+    public ResponseEntity<?> signup(@Valid @RequestBody UserDTO userDTO){
         return this.resSuccess(authService.signup(userDTO));
     }
 

@@ -12,7 +12,7 @@ public class JwtUtil {
 
     private final String SECCRET_KEY = "1231231";
 
-    private Integer TIME_EXPIRATION = 864000;
+    private final Integer TIME_EXPIRATION = 864000;
 
     public String extractUsername(String token){
         return Jwts.parser().setSigningKey(SECCRET_KEY).parseClaimsJws(token).getBody().getSubject();
@@ -34,7 +34,7 @@ public class JwtUtil {
     public String generateToken(UserDetails userDetails){
          return Jwts.builder().setSubject(userDetails.getUsername())
                  .setIssuedAt(new Date(System.currentTimeMillis()))
-                 .setExpiration(new Date(System.currentTimeMillis()+ TIME_EXPIRATION))
-                 .signWith(SignatureAlgorithm.ES256,SECCRET_KEY).compact();
+                 .setExpiration(new Date(System.currentTimeMillis() + TIME_EXPIRATION))
+                 .signWith(SignatureAlgorithm.HS256, SECCRET_KEY).compact();
     }
 }
