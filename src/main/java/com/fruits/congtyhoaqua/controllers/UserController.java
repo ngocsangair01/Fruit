@@ -32,6 +32,7 @@ public class UserController  extends BaseController<User> {
     }
 
     @DeleteMapping("/delete/{idUser}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> deleteUser(@PathVariable Integer idUser){
         return this.resSuccess(userService.deleteUser(idUser));
     }

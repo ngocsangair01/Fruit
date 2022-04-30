@@ -67,7 +67,7 @@ public class AuthServiceImp implements IAuthService {
     }
 
     @Override
-    public AuthenticationResponse signup(UserDTO userDTO) {
+    public AuthenticationResponse signupUser(UserDTO userDTO) {
         User oldUser = userRepository.findByAccount(userDTO.getAccount());
         if (oldUser != null){
             throw new BadRequestException("Username exists");
@@ -76,6 +76,27 @@ public class AuthServiceImp implements IAuthService {
         Convert.fromUserDTOToUser(userDTO,user);
         user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         Role role = roleRepository.findByName("ROLE_USER");
+        user.setRoles(Set.of(role));
+        User newUser = userRepository.save(user);
+        Set<User> users = role.getUsers();
+        users.add(user);
+        role.setUsers(users);
+        roleRepository.save(role);
+
+        final UserDetails userDetails = myUserDetailService.loadUserByUsername(newUser.getAccount());
+        final String jwt = jwtUtil.generateToken(userDetails);
+        return new AuthenticationResponse(jwt, newUser.getId(), newUser.getAccount(),List.of(role.getName()));
+    }
+    @Override
+    public AuthenticationResponse signupAdmin(UserDTO userDTO) {
+        User oldUser = userRepository.findByAccount(userDTO.getAccount());
+        if (oldUser != null){
+            throw new BadRequestException("Username exists");
+        }
+        User user = new User();
+        Convert.fromUserDTOToUser(userDTO,user);
+        user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+        Role role = roleRepository.findByName("ROLE_ADMIN");
         user.setRoles(Set.of(role));
         User newUser = userRepository.save(user);
         Set<User> users = role.getUsers();

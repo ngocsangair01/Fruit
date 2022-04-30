@@ -8,6 +8,7 @@ import com.fruits.congtyhoaqua.payload.AuthenticationRequest;
 import com.fruits.congtyhoaqua.services.IAuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,9 +29,16 @@ public class AuthController extends BaseController<AuthenticationResponse> {
         return this.resSuccess(authService.login(authenticationRequest));
     }
 
-    @PostMapping("/signup")
-    public ResponseEntity<?> signup(@Valid @RequestBody UserDTO userDTO){
-        return this.resSuccess(authService.signup(userDTO));
+    @PostMapping("/signup-user")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> signupUser(@Valid @RequestBody UserDTO userDTO){
+        return this.resSuccess(authService.signupUser(userDTO));
+    }
+
+    @PostMapping("/signup-admin")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> signupAdmin(@Valid @RequestBody UserDTO userDTO){
+        return this.resSuccess(authService.signupAdmin(userDTO));
     }
 
     @PostMapping("/validate")
