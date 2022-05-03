@@ -73,7 +73,7 @@ public class User extends BaseEntity {
 //            joinColumns = @JoinColumn(name = "id_user",referencedColumnName = "id_user"),
 //            inverseJoinColumns = @JoinColumn(name = "id_role",referencedColumnName = "id_role"))
 ////    @JsonIgnore
-    @ManyToMany(mappedBy = "users")
+    @ManyToMany(mappedBy = "users",fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @JsonIgnore
     private Set<Role> roles;
 
