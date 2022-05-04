@@ -24,7 +24,6 @@ public interface FruitRepository extends JpaRepository<Fruit, Integer> {
     @Query("select f from Fruit f where f.manufacture = ?1")
     Set<Fruit> findAllByManufacture(Manufacture manufacture);
 
-
     @Query("select f from Fruit f where f.priceOut > ?1 and f.priceOut < ?2")
     Set<Fruit> findAllByPriceOutGreaterThanAndPriceOutLessThan(Integer greaterPrice, Integer lessPrice);
 
