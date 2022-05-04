@@ -4,7 +4,9 @@ import com.cloudinary.api.exceptions.BadRequest;
 import com.fruits.congtyhoaqua.dtos.UserDTO;
 import com.fruits.congtyhoaqua.exceptions.BadRequestException;
 import com.fruits.congtyhoaqua.exceptions.NotFoundException;
+import com.fruits.congtyhoaqua.models.Role;
 import com.fruits.congtyhoaqua.models.User;
+import com.fruits.congtyhoaqua.repositories.RoleRepository;
 import com.fruits.congtyhoaqua.repositories.UserRepository;
 import com.fruits.congtyhoaqua.services.IUserService;
 import com.fruits.congtyhoaqua.utils.Convert;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 @Service
@@ -22,6 +25,7 @@ public class UserServiceImp implements IUserService {
     @Autowired private UserRepository userRepository;
     @Autowired private UploadFile uploadFile;
     @Autowired private PasswordEncoder passwordEncoder;
+    @Autowired private RoleRepository roleRepository;
 
     @Override
     public User createUser(UserDTO userDTO) {
@@ -50,6 +54,18 @@ public class UserServiceImp implements IUserService {
         if(user.isEmpty()){
             throw new NotFoundException("No user");
         }
+        System.out.println("Hello WWorld liên tục lần 1");
+        List<Role> roles = roleRepository.findAll();
+        for (Role role: roles) {
+            Set<User> userss = role.getUsers();
+            System.out.println(userss.size());
+            userss.remove(user.get());
+            System.out.println(userss.size());
+            role.setUsers(userss);
+        }
+        System.out.println("Hello WWorld liên tục lần 2");
+        roleRepository.saveAll(roles);
+        System.out.println("Hello WWorld liên tục lần 5");
         userRepository.delete(user.get());
         return user.get();
     }

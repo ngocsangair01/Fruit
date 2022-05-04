@@ -11,6 +11,7 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.Objects;
 import java.util.Set;
 @Getter
 @Setter
@@ -73,8 +74,37 @@ public class User extends BaseEntity {
 //            joinColumns = @JoinColumn(name = "id_user",referencedColumnName = "id_user"),
 //            inverseJoinColumns = @JoinColumn(name = "id_role",referencedColumnName = "id_role"))
 ////    @JsonIgnore
-    @ManyToMany(mappedBy = "users",fetch = FetchType.EAGER,cascade = CascadeType.MERGE)
+    @ManyToMany(mappedBy = "users")
     @JsonIgnore
     private Set<Role> roles;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(account, user.account);
+    }
+
+    @Override
+    public int hashCode() {
+        return 1;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "account='" + account + '\'' +
+                ", password='" + password + '\'' +
+                ", preName='" + preName + '\'' +
+                ", name='" + name + '\'' +
+                ", age=" + age +
+                ", address='" + address + '\'' +
+                ", birthday='" + birthday + '\'' +
+                ", avatar='" + avatar + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", bills=" + bills +
+                ", roles=" + roles +
+                '}';
+    }
 }
