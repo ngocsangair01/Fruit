@@ -94,7 +94,7 @@ public class UserServiceImp implements IUserService {
         if(user.isEmpty()){
             throw new NotFoundException("No user");
         }
-        user.get().setPassword(password);
+        user.get().setPassword(passwordEncoder.encode(password));
         return userRepository.save(user.get());
     }
 
