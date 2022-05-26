@@ -18,7 +18,7 @@ public class CategoryDTO {
     private String name;
 
 
-    @Length(max = 200000)
+    @Length(max = 5000)
     @Nationalized
     private String description;
 }

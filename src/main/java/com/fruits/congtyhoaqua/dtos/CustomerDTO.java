@@ -13,13 +13,13 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CustomerDTO {
-    @Length(max = 200000)
+    @Length(max = 5000)
     @NotBlank(message = "name not null")
     @Nationalized
     private String name;
 
 
-    @Length(max = 200000)
+    @Length(max = 5000)
     @NotBlank(message = "address not null")
     @Nationalized
     private String address;

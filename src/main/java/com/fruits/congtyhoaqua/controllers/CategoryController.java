@@ -6,7 +6,7 @@ import com.fruits.congtyhoaqua.models.Category;
 import com.fruits.congtyhoaqua.services.ICategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
+//import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -17,25 +17,25 @@ public class CategoryController extends BaseController<Category> {
     private ICategoryService categoryService;
 
     @PostMapping("/create")
-    @PreAuthorize("hasAnyRole('ADMIN','USER')")
+//    @PreAuthorize("hasAnyRole('ADMIN','USER')")
     public ResponseEntity<?> createCategory(@RequestBody CategoryDTO categoryDTO){
         return this.resSuccess(categoryService.createCategory(categoryDTO));
     }
 
     @PatchMapping("/edit-category/{idCategory}")
-    @PreAuthorize("hasAnyRole('ADMIN','USER')")
+//    @PreAuthorize("hasAnyRole('ADMIN','USER')")
     public ResponseEntity<?> editCategory(@PathVariable Integer idCategory, @RequestBody CategoryDTO categoryDTO){
         return  this.resSuccess(categoryService.editCategory(idCategory, categoryDTO));
     }
 
     @DeleteMapping("delete-category/{idCategory}")
-    @PreAuthorize("hasAnyRole('ADMIN','USER')")
+//    @PreAuthorize("hasAnyRole('ADMIN','USER')")
     public ResponseEntity<?> deleteCategory(@PathVariable Integer idCategory){
         return this.resSuccess(categoryService.deleteCategory(idCategory));
     }
 
     @GetMapping("/get-all-category")
-    @PreAuthorize("hasAnyRole('ADMIN','USER')")
+//    @PreAuthorize("hasAnyRole('ADMIN','USER')")
     public ResponseEntity<?> getAllCategory(){
         return  this.resSetSuccess(categoryService.getAllCategory());
     }

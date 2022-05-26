@@ -24,7 +24,7 @@ public class Category extends BaseEntity {
 
     @Column(name = "description")
     @Nationalized
-    @Length(max = 200000)
+    @Length(max = 5000)
     private String description;
 
 

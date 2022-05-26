@@ -47,7 +47,7 @@ public class User extends BaseEntity {
 
     @Column(name = "address")
     @NotBlank
-    @Length(max = 200000)
+    @Length(max = 5000)
     @Nationalized
     private String address;
 
@@ -57,7 +57,7 @@ public class User extends BaseEntity {
     private String birthday;
 
     @Column(name = "avatar")
-    @Length(max = 200000)
+    @Length(max = 5000)
     private String avatar;
 
     @Column(name = "phoneNumber")

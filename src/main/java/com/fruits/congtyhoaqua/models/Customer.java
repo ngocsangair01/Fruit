@@ -22,12 +22,12 @@ public class Customer extends BaseEntity {
 
     @Column(name = "name")
     @Nationalized
-    @Length(max = 200000)
+    @Length(max = 5000)
     private String name;
 
     @Column(name = "address")
     @Nationalized
-    @Length(max = 200000)
+    @Length(max = 5000)
     private String address;
 
     @Column(name = "phone_number")

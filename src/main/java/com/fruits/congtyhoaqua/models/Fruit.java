@@ -27,7 +27,7 @@ public class Fruit extends BaseEntity {
     private String avatar;
 
     @Column(name = "description")
-    @Length(max = 200000)
+    @Length(max = 5000)
     @Nationalized
     private String description;
 

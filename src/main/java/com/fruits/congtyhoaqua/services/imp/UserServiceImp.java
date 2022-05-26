@@ -12,7 +12,7 @@ import com.fruits.congtyhoaqua.services.IUserService;
 import com.fruits.congtyhoaqua.utils.Convert;
 import com.fruits.congtyhoaqua.utils.UploadFile;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
+//import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -24,7 +24,7 @@ import java.util.Set;
 public class UserServiceImp implements IUserService {
     @Autowired private UserRepository userRepository;
     @Autowired private UploadFile uploadFile;
-    @Autowired private PasswordEncoder passwordEncoder;
+//    @Autowired private PasswordEncoder passwordEncoder;
     @Autowired private RoleRepository roleRepository;
 
     @Override
@@ -44,7 +44,7 @@ public class UserServiceImp implements IUserService {
         if(user.isEmpty()){
             throw new NotFoundException("No user");
         }
-        user.get().setPassword(passwordEncoder.encode(userDTO.getPassword()));
+//        user.get().setPassword(passwordEncoder.encode(userDTO.getPassword()));
         return userRepository.save(Convert.fromUserDTOToUser(userDTO, user.get()));
     }
 
@@ -94,7 +94,7 @@ public class UserServiceImp implements IUserService {
         if(user.isEmpty()){
             throw new NotFoundException("No user");
         }
-        user.get().setPassword(passwordEncoder.encode(password));
+//        user.get().setPassword(passwordEncoder.encode(password));
         return userRepository.save(user.get());
     }
 

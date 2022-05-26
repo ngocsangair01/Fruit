@@ -11,10 +11,14 @@ spring:
     pathmatch:
       matching-strategy: ant_path_matcher
   datasource:
-    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
-    url: jdbc:sqlserver://localhost:1433;databaseName=testhq10
-    username: sa
-    password: 123
+#    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:sqlserver://localhost:1433;databaseName=testhq10
+    url: jdbc:mysql://localhost:3306/testhq1?useSSL=false
+#    username: sa
+    username: root
+#    password: 123
+    password: 12345678
     tomcat:
       connection-properties: useUnicode=true
       characterEncoding: utf-8
@@ -31,7 +35,8 @@ spring:
         format_sql: true
         globally_quoted_identifiers: true
         enable_lazy_load_no_trans: true
-        dialect: org.hibernate.dialect.SQLServer2012Dialect
+#        dialect: org.hibernate.dialect.SQLServer2012Dialect
+        dialect: org.hibernate.dialect.MySQL8Dialect
 logging:
   level:
     org:
@@ -43,3 +48,5 @@ email:
 #cloudinary.url=cloudinary://{api_key}:{api_secret}@{cloud_name}
 cloudinary:
   url: cloudinary://975898585293148:JJqFPcPDDF08WM4hL-K4ysUbXzo@none01
+server:
+  port: 8081
