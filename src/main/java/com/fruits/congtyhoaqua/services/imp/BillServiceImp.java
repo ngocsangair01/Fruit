@@ -111,6 +111,25 @@ public class BillServiceImp implements IBillService {
     }
 
     @Override
+    public Double thongKe(String start, String end) {
+        LocalDate startDateConvert = LocalDate.parse(start);
+        LocalDate endDateConvert = LocalDate.parse(end);
+        Set<Bill> bills = new HashSet<>(billRepository.findAllByDateCreatedBetween(startDateConvert,endDateConvert));
+        Double priceBillDetail = 0.0;
+        Double priceBill = 0.0;
+        for (Bill bill :
+                bills) {
+            Set<BillDetail> billDetails = bill.getBillDetails();
+            for (BillDetail billDetail :
+                    billDetails) {
+                priceBillDetail = Double.valueOf(billDetail.getFruit().getPriceOut()* billDetail.getAmount());
+                priceBill += priceBillDetail;
+            }
+        }
+        return priceBill;
+    }
+
+    @Override
     public Set<Bill> getAllBill() {
         Set<Bill> bills = new HashSet<>(billRepository.findAll());
         if (bills.isEmpty()){

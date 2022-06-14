@@ -37,6 +37,12 @@ public class BillController extends BaseController<Bill> {
     public ResponseEntity<?> getBillById(@PathVariable(name = "idBill")Integer idBill){
         return this.resSuccess(billService.getBillById(idBill));
     }
+
+    @GetMapping("/thongKe")
+    public ResponseEntity<?> thongKe(@RequestParam String start,
+                                     @RequestParam String end){
+        return ResponseEntity.status(200).body(billService.filterByTime(start,end));
+    }
     @GetMapping("/date")
 //    @PreAuthorize("hasAnyRole('ADMIN','USER')")
     public ResponseEntity<?> filterByTime(@RequestParam String start,

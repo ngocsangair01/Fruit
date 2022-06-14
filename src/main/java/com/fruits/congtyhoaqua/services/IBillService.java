@@ -11,5 +11,6 @@ public interface IBillService {
     Set<Bill> getAllBillByIdUser(Integer idUser);
     Bill getBillById(Integer idBill);
     Set<Bill> filterByTime(String start, String end);
+    Double thongKe(String start, String end);
     Set<Bill> getAllBill();
 }
