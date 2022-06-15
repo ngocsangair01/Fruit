@@ -9,6 +9,7 @@ import java.io.InvalidObjectException;
 public interface IAuthService {
     AuthenticationResponse login(AuthenticationRequest authenticationRequest);
     AuthenticationResponse signupUser(UserDTO userDTO);
+    AuthenticationResponse signupUser2(UserDTO userDTO);
     AuthenticationResponse signupAdmin(UserDTO userDTO);
     AuthenticationResponse validateToken(AuthenticationResponse authenticationResponse) throws InvalidObjectException;
 }

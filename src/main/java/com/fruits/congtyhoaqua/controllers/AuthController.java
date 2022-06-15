@@ -41,6 +41,12 @@ public class AuthController extends BaseController<AuthenticationResponse> {
         return this.resSuccess(authService.signupAdmin(userDTO));
     }
 
+    @PostMapping("/signup-user2")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> signUpUser2(@Valid @RequestBody UserDTO userDTO){
+        return this.resSuccess(authService.signupUser2(userDTO));
+    }
+
     @PostMapping("/validate")
     public ResponseEntity<?> validateToken(@RequestBody AuthenticationResponse authenticationResponse) throws InvalidObjectException {
         return this.resSuccess(authService.validateToken(authenticationResponse));
