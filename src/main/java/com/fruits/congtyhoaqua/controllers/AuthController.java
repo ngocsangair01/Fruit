@@ -31,6 +31,7 @@
 //
 //    @PostMapping("/signup-user")
 //    @PreAuthorize("hasRole('ADMIN')")
+<<<<<<< HEAD
 //    public ResponseEntity<?> signupUser(@Valid @RequestBody UserDTO userDTO){
 //        return this.resSuccess(authService.signupUser(userDTO));
 //    }
@@ -46,3 +47,20 @@
 //        return this.resSuccess(authService.validateToken(authenticationResponse));
 //    }
 //}
+=======
+    public ResponseEntity<?> signupAdmin(@Valid @RequestBody UserDTO userDTO){
+        return this.resSuccess(authService.signupAdmin(userDTO));
+    }
+
+    @PostMapping("/signup-user2")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> signUpUser2(@Valid @RequestBody UserDTO userDTO){
+        return this.resSuccess(authService.signupUser2(userDTO));
+    }
+
+    @PostMapping("/validate")
+    public ResponseEntity<?> validateToken(@RequestBody AuthenticationResponse authenticationResponse) throws InvalidObjectException {
+        return this.resSuccess(authService.validateToken(authenticationResponse));
+    }
+}
+>>>>>>> done1

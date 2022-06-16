@@ -19,6 +19,14 @@ spring:
     username: root
 #    password: 123
     password: 12345678
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+##    url: jdbc:mysql://localhost:3306/fruit?useSSL=false
+#    url: jdbc:sqlserver://localhost:1433;databaseName=testhq
+##    username: root
+#    username: sa
+##    password: 1234
+#    password: abc123!@#
     tomcat:
       connection-properties: useUnicode=true
       characterEncoding: utf-8
@@ -35,8 +43,13 @@ spring:
         format_sql: true
         globally_quoted_identifiers: true
         enable_lazy_load_no_trans: true
+
 #        dialect: org.hibernate.dialect.SQLServer2012Dialect
         dialect: org.hibernate.dialect.MySQL8Dialect
+
+#        dialect: org.hibernate.dialect.SQLServer2012Dialect
+#        dialect: org.hibernate.dialect.SQLServer2012Dialect
+
 logging:
   level:
     org:

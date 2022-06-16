@@ -17,6 +17,7 @@ import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+
 @Service
 public class BillServiceImp implements IBillService {
     @Autowired
@@ -36,14 +37,14 @@ public class BillServiceImp implements IBillService {
 
     @Override
     @Transactional
-    public Bill createBill(Integer idUser,Integer idCustomer,Set<BillDetailDTO> billDetailDTOS) {
+    public Bill createBill(Integer idUser, Integer idCustomer, Set<BillDetailDTO> billDetailDTOS) {
         // tạo bill
         Optional<User> user = userRepository.findById(idUser);
-        if (user.isEmpty()){
+        if (user.isEmpty()) {
             throw new NotFoundException("No User");
         }
         Optional<Customer> customer = customerRepository.findById(idCustomer);
-        if (customer.isEmpty()){
+        if (customer.isEmpty()) {
             throw new NotFoundException("No customer");
         }
         Bill bill = new Bill();
@@ -57,20 +58,20 @@ public class BillServiceImp implements IBillService {
         for (BillDetailDTO billDetailDTO :
                 billDetailDTOS) {
             BillDetail billDetail = new BillDetail();
-            Convert.fromBillDetailDTOToBillDetail(billDetailDTO,billDetail);
+            Convert.fromBillDetailDTOToBillDetail(billDetailDTO, billDetail);
             billDetail.setBill(bill1);
             //thay đổi số lượng trong bảng hoa quả
             Optional<Fruit> fruit = fruitRepository.findById(billDetailDTO.getIdFruit());
-            if (fruit.isEmpty()){
+            if (fruit.isEmpty()) {
                 throw new NotFoundException("No fruit");
             }
-            fruit.get().setAmount(fruit.get().getAmount()-billDetailDTO.getAmount());
-            if (fruit.get().getAmount()<0) {
+            fruit.get().setAmount(fruit.get().getAmount() - billDetailDTO.getAmount());
+            if (fruit.get().getAmount() < 0) {
                 throw new BadRequestException("So luong Khong hop le");
             }
             billDetail.setFruit(fruitRepository.save(fruit.get()));
             //set lại ID cho bảng billDetail
-            BillDetailId billDetailId = new BillDetailId(bill1.getId(),fruit.get().getId());
+            BillDetailId billDetailId = new BillDetailId(bill1.getId(), fruit.get().getId());
             billDetail.setBillDetailId(billDetailId);
             billDetailRepository.save(billDetail);
         }
@@ -80,11 +81,11 @@ public class BillServiceImp implements IBillService {
     @Override
     public Set<Bill> getAllBillByIdUser(Integer idUser) {
         Optional<User> user = userRepository.findById(idUser);
-        if (user.isEmpty()){
+        if (user.isEmpty()) {
             throw new NotFoundException("No User");
         }
         Set<Bill> bills = billRepository.findAllByUser(user.get());
-        if (bills.isEmpty()){
+        if (bills.isEmpty()) {
             throw new NotFoundException("No bill");
         }
         return bills;
@@ -93,7 +94,7 @@ public class BillServiceImp implements IBillService {
     @Override
     public Bill getBillById(Integer idBill) {
         Optional<Bill> bill = billRepository.findById(idBill);
-        if (bill.isEmpty()){
+        if (bill.isEmpty()) {
             throw new NotFoundException("No bill");
         }
         return bill.get();
@@ -103,8 +104,8 @@ public class BillServiceImp implements IBillService {
     public Set<Bill> filterByTime(String start, String end) {
         LocalDate startDateConvert = LocalDate.parse(start);
         LocalDate endDateConvert = LocalDate.parse(end);
-        Set<Bill> bills = new HashSet<>(billRepository.findAllByDateCreatedBetween(startDateConvert,endDateConvert));
-        if (bills.isEmpty()){
+        Set<Bill> bills = new HashSet<>(billRepository.findAllByDateCreatedBetween(startDateConvert, endDateConvert));
+        if (bills.isEmpty()) {
             throw new NotFoundException("No bill");
         }
         return bills;
@@ -132,7 +133,7 @@ public class BillServiceImp implements IBillService {
     @Override
     public Set<Bill> getAllBill() {
         Set<Bill> bills = new HashSet<>(billRepository.findAll());
-        if (bills.isEmpty()){
+        if (bills.isEmpty()) {
             throw new NotFoundException("No bill");
         }
         return bills;
