@@ -5,12 +5,12 @@ import com.fruits.congtyhoaqua.models.BillDetail;
 import com.fruits.congtyhoaqua.repositories.BillRepository;
 import com.fruits.congtyhoaqua.services.IBillService;
 import com.fruits.congtyhoaqua.services.IStatisticalService;
+import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class StatisticalServiceImp implements IStatisticalService {
@@ -22,12 +22,12 @@ public class StatisticalServiceImp implements IStatisticalService {
     private BillRepository billRepository;
 
 
-    public Double RevenueForTheMonth(String start, String end){
+    public Double RevenueForTheMonth(String start, String end) {
         LocalDate startDateConvert = LocalDate.parse(start);
         LocalDate endDateConvert = LocalDate.parse(end);
         Double billPrice = 0.0;
         Double billDetailPrice = 0.0;
-        Set<Bill> bills = new HashSet<>(billRepository.findAllByDateCreatedBetween(startDateConvert,endDateConvert));
+        Set<Bill> bills = new HashSet<>(billRepository.findAllByDateCreatedBetween(startDateConvert, endDateConvert));
         for (Bill bill : bills) {
             Set<BillDetail> billDetails = bill.getBillDetails();
             for (BillDetail billDetail : billDetails) {
@@ -39,20 +39,20 @@ public class StatisticalServiceImp implements IStatisticalService {
     }
 
     @Override
-    public Set<Double> RevenueForTheYear() {
-        Set<Double> doubles = new HashSet<>();
-        Double jan = RevenueForTheMonth("2022-01-01","2022-01-31");
-        Double feb = RevenueForTheMonth("2022-02-01","2022-02-29");
-        Double mar = RevenueForTheMonth("2022-03-01","2022-03-31");
-        Double apr = RevenueForTheMonth("2022-04-01","2022-04-30");
-        Double may = RevenueForTheMonth("2022-05-01","2022-05-31");
-        Double jun = RevenueForTheMonth("2022-06-01","2022-06-30");
-        Double jul = RevenueForTheMonth("2022-07-01","2022-07-31");
-        Double aug = RevenueForTheMonth("2022-08-01","2022-08-31");
-        Double sep = RevenueForTheMonth("2022-09-01","2022-09-30");
-        Double oct = RevenueForTheMonth("2022-10-01","2022-10-31");
-        Double nov = RevenueForTheMonth("2022-11-01","2022-11-30");
-        Double dec = RevenueForTheMonth("2022-12-01","2022-12-31");
+    public List<Double> RevenueForTheYear() {
+        List<Double> doubles = new ArrayList<>();
+        Double jan = RevenueForTheMonth("2022-01-01", "2022-01-31");
+        Double feb = RevenueForTheMonth("2022-02-01", "2022-02-28");
+        Double mar = RevenueForTheMonth("2022-03-01", "2022-03-31");
+        Double apr = RevenueForTheMonth("2022-04-01", "2022-04-30");
+        Double may = RevenueForTheMonth("2022-05-01", "2022-05-31");
+        Double jun = RevenueForTheMonth("2022-06-01", "2022-06-30");
+        Double jul = RevenueForTheMonth("2022-07-01", "2022-07-31");
+        Double aug = RevenueForTheMonth("2022-08-01", "2022-08-31");
+        Double sep = RevenueForTheMonth("2022-09-01", "2022-09-30");
+        Double oct = RevenueForTheMonth("2022-10-01", "2022-10-31");
+        Double nov = RevenueForTheMonth("2022-11-01", "2022-11-30");
+        Double dec = RevenueForTheMonth("2022-12-01", "2022-12-31");
         doubles.add(jan);
         doubles.add(feb);
         doubles.add(mar);
@@ -65,26 +65,166 @@ public class StatisticalServiceImp implements IStatisticalService {
         doubles.add(oct);
         doubles.add(nov);
         doubles.add(dec);
+        System.out.println(doubles.size());
         return doubles;
     }
 
     @Override
-    public Set<Double> TopFiveStaffAscending() {
-        return null;
+    public Map<String, Integer> TopFiveStaffAscending(String start, String end) {
+        LocalDate startDateConvert = LocalDate.parse(start);
+        LocalDate endDateConvert = LocalDate.parse(end);
+        Set<Bill> bills = new HashSet<>(billRepository.findAllByDateCreatedBetween(startDateConvert, endDateConvert));
+        String key;
+        Integer value;
+        Map<String, Integer> map = new HashMap<>();
+        for (Bill bill :
+                bills) {
+            key = bill.getUser().getName();
+            if (map.containsKey(key)) {
+                value = map.get(key);
+                map.remove(key);
+                map.put(key, value + 1);
+            } else {
+                map.put(key, new Integer(1));
+            }
+        }
+        Set<Map.Entry<String, Integer>> entries = map.entrySet();
+        Comparator<Map.Entry<String, Integer>> comparator = new Comparator<>() {
+            @Override
+            public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
+                Integer i1 = o1.getValue();
+                Integer i2 = o2.getValue();
+                return i2 - i1;
+            }
+        };
+        List<Map.Entry<String, Integer>> list = new ArrayList<>(entries);
+        Collections.sort(list, comparator);
+        Map<String, Integer> linked = new LinkedHashMap<>(list.size());
+        for (Map.Entry<String, Integer> entry : list) {
+            linked.put(entry.getKey(), entry.getValue());
+        }
+        return linked;
     }
 
     @Override
-    public Set<Double> TopFiveStaffDecrease() {
-        return null;
+    public Map<String, Integer> TopFiveStaffDecrease(String start, String end) {
+        LocalDate startDateConvert = LocalDate.parse(start);
+        LocalDate endDateConvert = LocalDate.parse(end);
+        Set<Bill> bills = new HashSet<>(billRepository.findAllByDateCreatedBetween(startDateConvert, endDateConvert));
+        String key;
+        Integer value;
+        Map<String, Integer> map = new HashMap<>();
+        for (Bill bill :
+                bills) {
+            key = bill.getUser().getName();
+            if (map.containsKey(key)) {
+                value = map.get(key);
+                map.remove(key);
+                map.put(key, value + 1);
+            } else {
+                map.put(key, new Integer(1));
+            }
+        }
+        // sắp xếp
+        Set<Map.Entry<String, Integer>> entries = map.entrySet();
+        Comparator<Map.Entry<String, Integer>> comparator = new Comparator<>() {
+            @Override
+            public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
+                Integer i1 = o1.getValue();
+                Integer i2 = o2.getValue();
+                return i1 - i2;
+            }
+        };
+        List<Map.Entry<String, Integer>> list = new ArrayList<>(entries);
+        Collections.sort(list, comparator);
+        Map<String, Integer> linked = new LinkedHashMap<>(list.size());
+        for (Map.Entry<String, Integer> entry : list) {
+            linked.put(entry.getKey(), entry.getValue());
+        }
+        return linked;
     }
 
     @Override
-    public Set<Double> TopFiveFruitBestseller() {
-        return null;
+    public Map<String, Integer> TopFiveFruitBestseller(String start, String end) {
+        LocalDate startDateConvert = LocalDate.parse(start);
+        LocalDate endDateConvert = LocalDate.parse(end);
+        Set<Bill> bills = new HashSet<>(billRepository.findAllByDateCreatedBetween(startDateConvert, endDateConvert));
+        String key;
+        Integer valueS = 0;
+        Integer value;
+        Map<String, Integer> map = new HashMap<>();
+        for (Bill bill :
+                bills) {
+            Set<BillDetail> billDetails = bill.getBillDetails();
+            for (BillDetail billDetail : billDetails) {
+                key = billDetail.getFruit().getName();
+                value = billDetail.getFruit().getPriceOut() * billDetail.getAmount();
+                if (map.containsKey(key)){
+                    value = map.get(key);
+                    map.remove(key);
+                    map.put(key,valueS+value);
+                } else {
+                    map.put(key,value);
+                }
+            }
+        }
+        Set<Map.Entry<String, Integer>> entries = map.entrySet();
+        Comparator<Map.Entry<String, Integer>> comparator = new Comparator<>() {
+            @Override
+            public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
+                Integer i1 = o1.getValue();
+                Integer i2 = o2.getValue();
+                return i2 - i1;
+            }
+        };
+        List<Map.Entry<String, Integer>> list = new ArrayList<>(entries);
+        Collections.sort(list, comparator);
+        Map<String, Integer> linked = new LinkedHashMap<>(list.size());
+        for (Map.Entry<String, Integer> entry : list) {
+            linked.put(entry.getKey(), entry.getValue());
+        }
+        return linked;
     }
 
     @Override
-    public Set<Double> TopFiveFruitSlowestSelling() {
-        return null;
+    public Map<String, Integer> TopFiveFruitSlowestSelling(String start, String end) {
+        LocalDate startDateConvert = LocalDate.parse(start);
+        LocalDate endDateConvert = LocalDate.parse(end);
+        Set<Bill> bills = new HashSet<>(billRepository.findAllByDateCreatedBetween(startDateConvert, endDateConvert));
+        String key;
+        Integer valueS = 0;
+        Integer value;
+        Map<String, Integer> map = new HashMap<>();
+        for (Bill bill :
+                bills) {
+            Set<BillDetail> billDetails = bill.getBillDetails();
+            for (BillDetail billDetail : billDetails) {
+                key = billDetail.getFruit().getName();
+                value = billDetail.getFruit().getPriceOut() * billDetail.getAmount();
+                if (map.containsKey(key)){
+                    value = map.get(key);
+                    map.remove(key);
+                    map.put(key,valueS+value);
+                } else {
+                    map.put(key,value);
+                }
+            }
+        }
+        Set<Map.Entry<String, Integer>> entries = map.entrySet();
+        Comparator<Map.Entry<String, Integer>> comparator = new Comparator<>() {
+            @Override
+            public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
+                Integer i1 = o1.getValue();
+                Integer i2 = o2.getValue();
+                return i1 - i2;
+            }
+        };
+        List<Map.Entry<String, Integer>> list = new ArrayList<>(entries);
+        Collections.sort(list, comparator);
+        Map<String, Integer> linked = new LinkedHashMap<>(list.size());
+        for (Map.Entry<String, Integer> entry : list) {
+            linked.put(entry.getKey(), entry.getValue());
+        }
+        return linked;
     }
 }
