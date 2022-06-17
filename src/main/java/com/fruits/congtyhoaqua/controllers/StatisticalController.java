@@ -24,22 +24,32 @@ public class StatisticalController extends BaseController<Double> {
     @GetMapping("/staff-asc")
     public ResponseEntity<?> topFiveStaffAcs(@RequestParam String start,
                                              @RequestParam String end){
-        return ResponseEntity.status(200).body(statisticalService.TopFiveStaffAscending(start,end));
+        return ResponseEntity.status(200).body(statisticalService.topFiveStaffAscending(start,end));
     }
 
     @GetMapping("/staff-dec")
     public ResponseEntity<?> topFiveStaffDec(@RequestParam String start,
                                              @RequestParam String end){
-        return ResponseEntity.status(200).body(statisticalService.TopFiveStaffDecrease(start,end));
+        return ResponseEntity.status(200).body(statisticalService.topFiveStaffDecrease(start,end));
     }
     @GetMapping("/fruit-asc")
     public ResponseEntity<?> topFiveFruitAsc(@RequestParam String start,
                                              @RequestParam String end){
-        return ResponseEntity.status(200).body(statisticalService.TopFiveFruitBestseller(start,end));
+        return ResponseEntity.status(200).body(statisticalService.topFiveFruitBestseller(start,end));
     }
     @GetMapping("/fruit-dec")
     public ResponseEntity<?> topFiveFruitDec(@RequestParam String start,
                                              @RequestParam String end){
-        return ResponseEntity.status(200).body(statisticalService.TopFiveFruitSlowestSelling(start,end));
+        return ResponseEntity.status(200).body(statisticalService.topFiveFruitSlowestSelling(start,end));
+    }
+    @GetMapping("/fruit-profit-asc")
+    public ResponseEntity<?> topFiveFruitProfitAsc(@RequestParam String start,
+                                             @RequestParam String end){
+        return ResponseEntity.status(200).body(statisticalService.topFiveFruitBestProfit(start,end));
+    }
+    @GetMapping("/fruit-profit-dec")
+    public ResponseEntity<?> topFiveFruitProfitDec(@RequestParam String start,
+                                             @RequestParam String end){
+        return ResponseEntity.status(200).body(statisticalService.topFiveFruitWorstProfit(start,end));
     }
 }

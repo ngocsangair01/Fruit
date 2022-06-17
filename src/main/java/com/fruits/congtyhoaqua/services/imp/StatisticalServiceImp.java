@@ -70,7 +70,7 @@ public class StatisticalServiceImp implements IStatisticalService {
     }
 
     @Override
-    public Map<String, Integer> TopFiveStaffAscending(String start, String end) {
+    public Map<String, Integer> topFiveStaffAscending(String start, String end) {
         LocalDate startDateConvert = LocalDate.parse(start);
         LocalDate endDateConvert = LocalDate.parse(end);
         Set<Bill> bills = new HashSet<>(billRepository.findAllByDateCreatedBetween(startDateConvert, endDateConvert));
@@ -107,7 +107,7 @@ public class StatisticalServiceImp implements IStatisticalService {
     }
 
     @Override
-    public Map<String, Integer> TopFiveStaffDecrease(String start, String end) {
+    public Map<String, Integer> topFiveStaffDecrease(String start, String end) {
         LocalDate startDateConvert = LocalDate.parse(start);
         LocalDate endDateConvert = LocalDate.parse(end);
         Set<Bill> bills = new HashSet<>(billRepository.findAllByDateCreatedBetween(startDateConvert, endDateConvert));
@@ -145,7 +145,7 @@ public class StatisticalServiceImp implements IStatisticalService {
     }
 
     @Override
-    public Map<String, Integer> TopFiveFruitBestseller(String start, String end) {
+    public Map<String, Integer> topFiveFruitBestseller(String start, String end) {
         LocalDate startDateConvert = LocalDate.parse(start);
         LocalDate endDateConvert = LocalDate.parse(end);
         Set<Bill> bills = new HashSet<>(billRepository.findAllByDateCreatedBetween(startDateConvert, endDateConvert));
@@ -187,7 +187,7 @@ public class StatisticalServiceImp implements IStatisticalService {
     }
 
     @Override
-    public Map<String, Integer> TopFiveFruitSlowestSelling(String start, String end) {
+    public Map<String, Integer> topFiveFruitSlowestSelling(String start, String end) {
         LocalDate startDateConvert = LocalDate.parse(start);
         LocalDate endDateConvert = LocalDate.parse(end);
         Set<Bill> bills = new HashSet<>(billRepository.findAllByDateCreatedBetween(startDateConvert, endDateConvert));
@@ -201,6 +201,90 @@ public class StatisticalServiceImp implements IStatisticalService {
             for (BillDetail billDetail : billDetails) {
                 key = billDetail.getFruit().getName();
                 value = billDetail.getFruit().getPriceOut() * billDetail.getAmount();
+                if (map.containsKey(key)){
+                    value = map.get(key);
+                    map.remove(key);
+                    map.put(key,valueS+value);
+                } else {
+                    map.put(key,value);
+                }
+            }
+        }
+        Set<Map.Entry<String, Integer>> entries = map.entrySet();
+        Comparator<Map.Entry<String, Integer>> comparator = new Comparator<>() {
+            @Override
+            public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
+                Integer i1 = o1.getValue();
+                Integer i2 = o2.getValue();
+                return i1 - i2;
+            }
+        };
+        List<Map.Entry<String, Integer>> list = new ArrayList<>(entries);
+        Collections.sort(list, comparator);
+        Map<String, Integer> linked = new LinkedHashMap<>(list.size());
+        for (Map.Entry<String, Integer> entry : list) {
+            linked.put(entry.getKey(), entry.getValue());
+        }
+        return linked;
+    }
+
+    @Override
+    public Map<String, Integer> topFiveFruitBestProfit(String start, String end) {
+        LocalDate startDateConvert = LocalDate.parse(start);
+        LocalDate endDateConvert = LocalDate.parse(end);
+        Set<Bill> bills = new HashSet<>(billRepository.findAllByDateCreatedBetween(startDateConvert, endDateConvert));
+        String key;
+        Integer valueS = 0;
+        Integer value;
+        Map<String, Integer> map = new HashMap<>();
+        for (Bill bill :
+                bills) {
+            Set<BillDetail> billDetails = bill.getBillDetails();
+            for (BillDetail billDetail : billDetails) {
+                key = billDetail.getFruit().getName();
+                value = (billDetail.getFruit().getPriceOut()-billDetail.getFruit().getPriceIn()) * billDetail.getAmount();
+                if (map.containsKey(key)){
+                    value = map.get(key);
+                    map.remove(key);
+                    map.put(key,valueS+value);
+                } else {
+                    map.put(key,value);
+                }
+            }
+        }
+        Set<Map.Entry<String, Integer>> entries = map.entrySet();
+        Comparator<Map.Entry<String, Integer>> comparator = new Comparator<>() {
+            @Override
+            public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
+                Integer i1 = o1.getValue();
+                Integer i2 = o2.getValue();
+                return i2 - i1;
+            }
+        };
+        List<Map.Entry<String, Integer>> list = new ArrayList<>(entries);
+        Collections.sort(list, comparator);
+        Map<String, Integer> linked = new LinkedHashMap<>(list.size());
+        for (Map.Entry<String, Integer> entry : list) {
+            linked.put(entry.getKey(), entry.getValue());
+        }
+        return linked;
+    }
+
+    @Override
+    public Map<String, Integer> topFiveFruitWorstProfit(String start, String end) {
+        LocalDate startDateConvert = LocalDate.parse(start);
+        LocalDate endDateConvert = LocalDate.parse(end);
+        Set<Bill> bills = new HashSet<>(billRepository.findAllByDateCreatedBetween(startDateConvert, endDateConvert));
+        String key;
+        Integer valueS = 0;
+        Integer value;
+        Map<String, Integer> map = new HashMap<>();
+        for (Bill bill :
+                bills) {
+            Set<BillDetail> billDetails = bill.getBillDetails();
+            for (BillDetail billDetail : billDetails) {
+                key = billDetail.getFruit().getName();
+                value = (billDetail.getFruit().getPriceOut()-billDetail.getFruit().getPriceIn()) * billDetail.getAmount();
                 if (map.containsKey(key)){
                     value = map.get(key);
                     map.remove(key);
